@@ -1,7 +1,7 @@
 {
-  "name": "api",
+  "name": "data",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/api/src",
+  "sourceRoot": "apps/data/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -10,12 +10,12 @@
       "defaultConfiguration": "production",
       "options": {
         "platform": "node",
-        "outputPath": "dist/apps/api",
+        "outputPath": "dist/apps/data",
         "format": ["cjs"],
         "bundle": false,
-        "main": "apps/api/src/main.ts",
-        "tsConfig": "apps/api/tsconfig.app.json",
-        "assets": ["apps/api/src/assets"],
+        "main": "apps/data/src/main.ts",
+        "tsConfig": "apps/data/tsconfig.app.json",
+        "assets": ["apps/data/src/assets"],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
@@ -40,15 +40,14 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "api:build",
-        "proxyConfig": "apps/api/proxy.conf.json"
+        "buildTarget": "data:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "api:build:development"
+          "buildTarget": "data:build:development"
         },
         "production": {
-          "buildTarget": "api:build:production"
+          "buildTarget": "data:build:production"
         }
       }
     }
