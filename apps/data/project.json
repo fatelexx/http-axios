@@ -40,7 +40,8 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "data:build"
+        "buildTarget": "data:build",
+        "inspect": true
       },
       "configurations": {
         "development": {
