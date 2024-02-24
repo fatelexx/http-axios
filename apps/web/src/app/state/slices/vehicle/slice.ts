@@ -1,34 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
 import {VehicleDto} from '@http-axios/http';
-import { getAll, remove } from './thunks';
+import { create, get, getAll, remove, update } from './thunks';
 
 export interface VehicleState {
-  value: number;
   vehicles: Array<VehicleDto>;
+  form?: VehicleDto;
+  isFormVisible?: boolean;
 }
 
 const initialState: VehicleState = {
-  value: 0,
-  vehicles: []
+  vehicles: [],
 }
 
 export const vehicleSlice = createSlice({
   name: 'vehicle',
   initialState,
   reducers: {
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1
+    showForm: (state) => {
+      state.isFormVisible = true;
     },
-    decrement: (state) => {
-      state.value -= 1
-    },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload
+    hideForm: (state) => {
+      state.isFormVisible = false;
     },
   },
   extraReducers: (builder) => {
@@ -39,10 +31,19 @@ export const vehicleSlice = createSlice({
     builder.addCase(remove.fulfilled, (state, action) => {
       state.vehicles = state.vehicles.filter(v => v.id !== action.payload);
     })
+    builder.addCase(create.fulfilled, (state, action) => {
+      state.vehicles = [...state.vehicles, {...action.meta.arg, id: action.payload}]
+    })
+    builder.addCase(get.fulfilled, (state, action) => {
+      state.form = action.payload;
+    })
+    builder.addCase(update.fulfilled, (state, action) => {
+      state.vehicles = state.vehicles.map(v => v.id !== action.meta.arg.id ? v : action.meta.arg)
+    })
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = vehicleSlice.actions
+export const { showForm, hideForm } = vehicleSlice.actions;
 
-export default vehicleSlice.reducer
+export default vehicleSlice.reducer;

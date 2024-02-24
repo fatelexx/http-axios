@@ -11,10 +11,34 @@ export const getAll = createAsyncThunk(
     },
 )
 
+export const get = createAsyncThunk(
+    'vehicle/get',
+    async (id: number) => {
+        const response = await httpService.get<VehicleDto>(`http://[::1]:3000/${id}`);
+        return response;
+    },
+)
+
 export const remove = createAsyncThunk(
     'vehicle/remove',
     async (id: number) => {
         await httpService.delete<undefined>(`http://[::1]:3000/${id}`);
         return id;
+    },
+)
+
+export const create = createAsyncThunk(
+    'vehicle/create',
+    async (vehicle: VehicleDto) => {
+        const result = await httpService.post<VehicleDto, number>(`http://[::1]:3000/`, vehicle);
+        return result;
+    },
+)
+
+export const update = createAsyncThunk(
+    'vehicle/update',
+    async (vehicle: VehicleDto) => {
+        const result = await httpService.put<VehicleDto, undefined>(`http://[::1]:3000/${vehicle.id}`, vehicle);
+        return result;
     },
 )

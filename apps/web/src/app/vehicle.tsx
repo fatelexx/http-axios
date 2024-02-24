@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "./state/store";
-import { getAll, remove } from "./state/slices/vehicle/thunks";
+import { get, getAll, remove } from "./state/slices/vehicle/thunks";
 import { useEffect } from "react";
+import { showForm } from "./state/slices/vehicle/slice";
 
 export function Vehicle() {
     const vehicles = useSelector((state: RootState) => state.vehicle.vehicles);
@@ -15,6 +16,11 @@ export function Vehicle() {
         await dispatch(remove(id));
     }
 
+    const onUpdate = async (id: number) => {
+        await dispatch(get(id));
+        dispatch(showForm());
+    }
+
     return (
     <div>
       <div>
@@ -23,6 +29,12 @@ export function Vehicle() {
           onClick={() => dispatch(getAll())}
         >
           Refresh
+        </button>
+        <button
+          aria-label="Refresh"
+          onClick={() => dispatch(showForm())}
+        >
+          Add New
         </button>
         <table>
             <tbody>
@@ -43,6 +55,7 @@ export function Vehicle() {
                         <td>{v.trim}</td>
                         <td>
                             <button onClick={() => onDelete(v.id)}>Delete</button>
+                            <button onClick={() => onUpdate(v.id)}>Update</button>
                         </td>
                     </tr>
                 )}
