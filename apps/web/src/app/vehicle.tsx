@@ -1,27 +1,53 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
-import { decrement, increment } from "../vehicle-slice";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "./state/store";
+import { getAll, remove } from "./state/slices/vehicle/thunks";
+import { useEffect } from "react";
 
 export function Vehicle() {
-    const count = useSelector((state: RootState) => state.vehicle.value);
-    const dispatch = useDispatch();
+    const vehicles = useSelector((state: RootState) => state.vehicle.vehicles);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(getAll());
+    }, [dispatch]);
+
+    const onDelete = async (id: number) => {
+        await dispatch(remove(id));
+    }
 
     return (
     <div>
       <div>
         <button
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
+          aria-label="Refresh"
+          onClick={() => dispatch(getAll())}
         >
-          Increment
+          Refresh
         </button>
-        <span>{count}</span>
-        <button
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          Decrement
-        </button>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <th>Year</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Trim</th>
+                    <th>Actions</th>
+                </tr>
+                {vehicles.map(v => 
+                    <tr key={v.id}>
+                        <td>{v.id}</td>
+                        <td>{v.year}</td>
+                        <td>{v.make}</td>
+                        <td>{v.model}</td>
+                        <td>{v.trim}</td>
+                        <td>
+                            <button onClick={() => onDelete(v.id)}>Delete</button>
+                        </td>
+                    </tr>
+                )}
+            </tbody>
+        </table>
       </div>
     </div>
     )
