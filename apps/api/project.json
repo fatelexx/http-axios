@@ -41,7 +41,6 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "api:build",
-        "proxyConfig": "apps/api/proxy.conf.json"
       },
       "configurations": {
         "development": {
