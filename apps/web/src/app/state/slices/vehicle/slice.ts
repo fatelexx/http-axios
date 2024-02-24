@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {VehicleDto} from '@http-axios/http';
-import { getAll } from './thunks';
+import { getAll, remove } from './thunks';
 
 export interface VehicleState {
   value: number;
@@ -35,6 +35,9 @@ export const vehicleSlice = createSlice({
     builder.addCase(getAll.fulfilled, (state, action) => {
       // Add user to the state array
       state.vehicles = action.payload;
+    })
+    builder.addCase(remove.fulfilled, (state, action) => {
+      state.vehicles = state.vehicles.filter(v => v.id !== action.payload);
     })
   }
 })
