@@ -1,16 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import {VehicleDto} from '@http-axios/http';
+import { getAll } from './thunks';
 
 export interface VehicleState {
-  value: number
+  value: number;
+  vehicles: Array<VehicleDto>;
 }
 
 const initialState: VehicleState = {
   value: 0,
+  vehicles: []
 }
 
 export const vehicleSlice = createSlice({
-  name: 'counter',
+  name: 'vehicle',
   initialState,
   reducers: {
     increment: (state) => {
@@ -27,6 +31,12 @@ export const vehicleSlice = createSlice({
       state.value += action.payload
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getAll.fulfilled, (state, action) => {
+      // Add user to the state array
+      state.vehicles = action.payload;
+    })
+  }
 })
 
 // Action creators are generated for each case reducer function
