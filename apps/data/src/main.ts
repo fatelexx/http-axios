@@ -13,6 +13,27 @@ const vehicles: Array<VehicleEntity> = [
     make: 'Mazda',
     model: 'Mazda3',
     trim: 'AT'
+  },
+  {
+    id: 2,
+    year: 2018,
+    make: 'Mitsubishi',
+    model: 'Montero Sport',
+    trim: 'MT'
+  },
+  {
+    id: 3,
+    year: 2021,
+    make: 'Honda',
+    model: 'CRV',
+    trim: 'AT'
+  },
+  {
+    id: 4,
+    year: 2025,
+    make: 'Ford',
+    model: 'Ranger',
+    trim: 'MT'
   }
 ];
 
@@ -44,10 +65,10 @@ app.put('/', (req: Request<VehicleEntity>, res: Response) => {
   }
   
   vehicle.year = request.year;
-  vehicle.make = request.make;
+  vehicle.make = request.make;   
   vehicle.model = request.model;
   vehicle.trim = request.trim;
-  
+   
   res.sendStatus(200);
 });
 
