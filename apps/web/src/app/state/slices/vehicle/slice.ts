@@ -22,6 +22,9 @@ export const vehicleSlice = createSlice({
     hideForm: (state) => {
       state.isFormVisible = false;
     },
+    resetForm: (state) => {
+      state.form = undefined;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(getAll.fulfilled, (state, action) => {
@@ -44,6 +47,6 @@ export const vehicleSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { showForm, hideForm } = vehicleSlice.actions;
+export const { showForm, hideForm, resetForm } = vehicleSlice.actions;
 
 export default vehicleSlice.reducer;

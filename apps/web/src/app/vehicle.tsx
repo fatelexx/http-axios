@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "./state/store";
 import { get, getAll, remove } from "./state/slices/vehicle/thunks";
 import { useEffect } from "react";
-import { showForm } from "./state/slices/vehicle/slice";
+import { resetForm, showForm } from "./state/slices/vehicle/slice";
 
 export function Vehicle() {
     const vehicles = useSelector((state: RootState) => state.vehicle.vehicles);
@@ -21,6 +21,11 @@ export function Vehicle() {
         dispatch(showForm());
     }
 
+    const onAddNew = () => {
+        dispatch(resetForm());
+        dispatch(showForm());
+    }
+
     return (
     <div>
       <div>
@@ -31,8 +36,7 @@ export function Vehicle() {
           Refresh
         </button>
         <button
-          aria-label="Refresh"
-          onClick={() => dispatch(showForm())}
+          onClick={onAddNew}
         >
           Add New
         </button>
