@@ -34,9 +34,9 @@ app.post('/', (req: Request<VehicleEntity>, res: Response<number>) => {
   res.status(201).json(newVehicle.id);
 });
 
-app.put('/:id', (req: Request<VehicleEntity>, res: Response) => {
-  const id = +req.params.id;
+app.put('/', (req: Request<VehicleEntity>, res: Response) => {
   const request: VehicleEntity = req.body;
+  const id = +request.id;
   const vehicle = vehicles.find(v => v.id === id);
 
   if (!vehicle) {
