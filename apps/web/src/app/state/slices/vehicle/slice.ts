@@ -9,7 +9,7 @@ export interface VehicleState {
 }
 
 const initialState: VehicleState = {
-  vehicles: [],
+  vehicles: [], 
 }
 
 export const vehicleSlice = createSlice({
